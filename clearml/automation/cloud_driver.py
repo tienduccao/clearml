@@ -21,11 +21,12 @@ apt-get install -y \
         build-essential \
         gcc \
         git \
-        python3-dev \
+        python{python_version} \
+        python{python_version}-dev \
         python3-pip
-python3 -m pip install -U pip
-python3 -m pip install virtualenv
-python3 -m virtualenv clearml_agent_venv
+python{python_version} -m pip install -U pip
+python{python_version} -m pip install virtualenv
+python{python_version} -m virtualenv clearml_agent_venv
 source clearml_agent_venv/bin/activate
 python -m pip install clearml-agent
 cat << EOF >> ~/clearml.conf
@@ -114,6 +115,8 @@ class CloudDriver(ABC):
 
     def gen_user_data(self, worker_prefix, queue_name, task_id):
         return bash_script_template.format(
+            python_version=environ.get('PYTHON_VERSION', '3.6'),
+
             queue=queue_name,
             worker_prefix=worker_prefix,
 
