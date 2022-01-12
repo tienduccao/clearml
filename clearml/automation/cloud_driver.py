@@ -151,7 +151,7 @@ class CloudDriver(ABC):
     def driver_bash_extra(self, task_id):
         if not task_id:
             return ''
-        return 'python -m clearml_agent --config-file ~/clearml.conf execute --id {}'.format(task_id)
+        return 'python -m clearml_agent --config-file ~/clearml.conf execute --id {} --full-monitoring'.format(task_id)
 
     @classmethod
     def from_config(cls, config):
